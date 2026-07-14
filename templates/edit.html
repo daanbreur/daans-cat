@@ -1,0 +1,27 @@
+{{define "content"}}
+<section class="admin">
+
+  {{if .Err}}<p class="err">{{.Err}}</p>{{end}}
+
+  <p class="editing">
+    <a href="/p/{{.Post.ID}}"><img src="/media/{{.Post.Thumb}}" alt="" width="120"></a>
+    <span class="hint">the photo can't be changed — repost to swap it.</span>
+  </p>
+
+  <form class="upload" method="post" action="/admin/edit">
+    <input type="hidden" name="csrf" value="{{.CSRF}}">
+    <input type="hidden" name="id" value="{{.Post.ID}}">
+
+    <label for="caption">caption <span class="hint">optional</span></label>
+    <input type="text" id="caption" name="caption" maxlength="280"
+           value="{{.Post.Caption}}" autofocus>
+
+    <label for="date">date</label>
+    <input type="date" id="date" name="date" value="{{shortDate .Post.Date}}">
+
+    <button type="submit">save</button>
+    <a class="cancel" href="/admin">cancel</a>
+  </form>
+
+</section>
+{{end}}

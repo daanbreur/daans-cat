@@ -1,0 +1,48 @@
+{{define "content"}}
+<section class="admin">
+
+  {{if .Err}}<p class="err">{{.Err}}</p>{{end}}
+  {{if .Flash}}<p class="ok">{{.Flash}}</p>{{end}}
+
+  <form class="upload" method="post" action="/admin/upload" enctype="multipart/form-data">
+    <input type="hidden" name="csrf" value="{{.CSRF}}">
+
+    <label for="photo">photo <span class="hint">jpeg, png or webp — 25 MB max</span></label>
+    <input type="file" id="photo" name="photo" accept="image/jpeg,image/png,image/webp" required>
+
+    <label for="caption">caption <span class="hint">optional</span></label>
+    <input type="text" id="caption" name="caption" maxlength="280" placeholder="sat on the clean laundry again">
+
+    <label for="date">date <span class="hint">defaults to today</span></label>
+    <input type="date" id="date" name="date">
+
+    <button type="submit">post</button>
+  </form>
+
+  {{if .Posts}}
+  <ul class="posts">
+    {{range .Posts}}
+    <li>
+      <a href="/p/{{.ID}}"><img src="/media/{{.Thumb}}" alt="" loading="lazy"></a>
+      <span class="meta">
+        <time datetime="{{shortDate .Date}}">{{shortDate .Date}}</time>
+        <span class="cap">{{if .Caption}}{{.Caption}}{{else}}—{{end}}</span>
+      </span>
+      <a class="edit" href="/admin/edit/{{.ID}}">edit</a>
+      <form method="post" action="/admin/delete" class="del">
+        <input type="hidden" name="csrf" value="{{$.CSRF}}">
+        <input type="hidden" name="id" value="{{.ID}}">
+        <button type="submit">delete</button>
+      </form>
+    </li>
+    {{end}}
+  </ul>
+  {{end}}
+
+  <form method="post" action="/admin/logout" class="logout">
+    <input type="hidden" name="csrf" value="{{.CSRF}}">
+    <button type="submit">log out</button>
+  </form>
+
+</section>
+{{end}}

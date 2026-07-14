@@ -1,0 +1,21 @@
+# Caddy gets you a real certificate automatically with ACME. Point DNS at this box, drop this in /etc/caddy/Caddyfile, and you are done.
+
+daans.cat, www.daans.cat {
+	encode zstd gzip
+
+    # Lol don't even use this myself but could be worth trying at some point
+	# The admin panel is the only thing worth attacking. If your IP is stable, uncomment this and it stops existing for everyone else.
+
+	# @admin path /admin /admin/*
+	# handle @admin {
+	# 	@notme not remote_ip 1.2.3.4
+	# 	respond @notme 404
+	# }
+
+	reverse_proxy 127.0.0.1:8080
+
+	log {
+		output file /var/log/caddy/daans.cat.log
+		format console
+	}
+}

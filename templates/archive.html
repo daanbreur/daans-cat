@@ -1,0 +1,19 @@
+{{define "content"}}
+{{if .Posts}}
+<ul class="grid">
+  {{range .Posts}}
+  <li>
+    <a href="/p/{{.ID}}">
+      <img src="/media/{{.Thumb}}" alt="{{if .Caption}}{{.Caption}}{{else}}the cat{{end}}" loading="lazy">
+      <span class="meta">
+        <time datetime="{{shortDate .Date}}">{{shortDate .Date}}</time>
+        {{if .Caption}}<span class="cap">{{.Caption}}</span>{{end}}
+      </span>
+    </a>
+  </li>
+  {{end}}
+</ul>
+{{else}}
+<p class="empty">nothing yet.</p>
+{{end}}
+{{end}}

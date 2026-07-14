@@ -1,0 +1,28 @@
+services:
+  daans-cat:
+    build: .
+    image: daans-cat:latest
+    restart: unless-stopped
+
+    # Bound to loopback: a reverse proxy (Caddy/nginx/Traefik) terminates TLS
+    # and is the only thing that talks to this. Drop the 127.0.0.1 prefix only
+    # if you really mean to expose it directly.
+    ports:
+      - "127.0.0.1:8080:8080"
+
+    env_file: .env
+
+    volumes:
+      - ./data:/data
+
+    # The app writes to /data and nowhere else.
+    read_only: true
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

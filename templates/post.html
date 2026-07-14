@@ -1,0 +1,21 @@
+{{define "content"}}
+<article>
+  <a href="/p/{{.Post.ID}}" class="photo">
+    <img src="/media/{{.Post.Image}}"
+         width="{{.Post.Width}}" height="{{.Post.Height}}"
+         alt="{{if .Post.Caption}}{{.Post.Caption}}{{else}}the cat{{end}}">
+  </a>
+
+  <p class="date"><time datetime="{{shortDate .Post.Date}}">{{longDate .Post.Date}}</time></p>
+  {{if .Post.Caption}}<p class="caption">{{.Post.Caption}}</p>{{end}}
+</article>
+
+<nav class="pager">
+  <span class="left">
+    {{if .Older}}<a href="/p/{{.Older.ID}}" rel="prev">&larr; older</a>{{end}}
+  </span>
+  <span class="right">
+    {{if .Newer}}<a href="/p/{{.Newer.ID}}" rel="next">newer &rarr;</a>{{end}}
+  </span>
+</nav>
+{{end}}

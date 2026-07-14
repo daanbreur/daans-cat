@@ -1,0 +1,10 @@
+{{define "content"}}
+<form class="login" method="post" action="/admin/login" autocomplete="on">
+  {{if .Err}}<p class="err">{{.Err}}</p>{{end}}
+  <label for="password">password</label>
+  <input type="password" id="password" name="password" required autofocus
+         autocomplete="current-password" maxlength="256"
+         {{if .Err}}class="bad" aria-invalid="true"{{end}}>
+  <button type="submit">enter</button>
+</form>
+{{end}}
